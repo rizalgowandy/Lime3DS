@@ -38,6 +38,7 @@ import io.github.lime3ds.android.features.settings.model.view.SwitchSetting
 import io.github.lime3ds.android.features.settings.utils.SettingsFile
 import io.github.lime3ds.android.fragments.ResetSettingsDialogFragment
 import io.github.lime3ds.android.utils.BirthdayMonth
+import io.github.lime3ds.android.utils.GpuDriverHelper
 import io.github.lime3ds.android.utils.Log
 import io.github.lime3ds.android.utils.SystemSaveGame
 import io.github.lime3ds.android.utils.ThemeUtil
@@ -109,6 +110,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 SubmenuSetting(
                     R.string.preferences_general,
                     0,
+                    R.drawable.ic_general_settings,
                     Settings.SECTION_CORE
                 )
             )
@@ -116,6 +118,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 SubmenuSetting(
                     R.string.preferences_system,
                     0,
+                    R.drawable.ic_system_settings,
                     Settings.SECTION_SYSTEM
                 )
             )
@@ -123,6 +126,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 SubmenuSetting(
                     R.string.preferences_camera,
                     0,
+                    R.drawable.ic_camera_settings,
                     Settings.SECTION_CAMERA
                 )
             )
@@ -130,6 +134,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 SubmenuSetting(
                     R.string.preferences_controls,
                     0,
+                    R.drawable.ic_controls_settings,
                     Settings.SECTION_CONTROLS
                 )
             )
@@ -137,6 +142,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 SubmenuSetting(
                     R.string.preferences_graphics,
                     0,
+                    R.drawable.ic_graphics,
                     Settings.SECTION_RENDERER
                 )
             )
@@ -144,6 +150,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 SubmenuSetting(
                     R.string.preferences_audio,
                     0,
+                    R.drawable.ic_audio,
                     Settings.SECTION_AUDIO
                 )
             )
@@ -151,6 +158,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 SubmenuSetting(
                     R.string.preferences_debug,
                     0,
+                    R.drawable.ic_code,
                     Settings.SECTION_DEBUG
                 )
             )
@@ -159,6 +167,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                     R.string.reset_to_default,
                     0,
                     false,
+                    R.drawable.ic_restore,
                     {
                         ResetSettingsDialogFragment().show(
                             settingsActivity.supportFragmentManager,
@@ -303,6 +312,7 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                     R.string.console_id,
                     0,
                     false,
+                    0,
                     { settingsAdapter.onClickRegenerateConsoleId() },
                     { "0x${SystemSaveGame.getConsoleId().toHexString().uppercase()}" }
                 )
@@ -609,10 +619,17 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                 add(InputBindingSetting(button, Settings.axisTitles[i]))
             }
 
-            add(HeaderSetting(R.string.controller_dpad))
-            Settings.dPadKeys.forEachIndexed { i: Int, key: String ->
+            // TODO: Improve the integration of the two dpad types to be
+            //       less user-facingly hacky
+            add(HeaderSetting(R.string.controller_dpad_axis))
+            Settings.dPadAxisKeys.forEachIndexed { i: Int, key: String ->
                 val button = getInputObject(key)
                 add(InputBindingSetting(button, Settings.axisTitles[i]))
+            }
+            add(HeaderSetting(R.string.controller_dpad_button))
+            Settings.dPadButtonKeys.forEachIndexed { i: Int, key: String ->
+                val button = getInputObject(key)
+                add(InputBindingSetting(button, Settings.dpadTitles[i]))
             }
 
             add(HeaderSetting(R.string.controller_triggers))
@@ -708,6 +725,17 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                     IntSetting.SHADERS_ACCURATE_MUL.defaultValue
                 )
             )
+            if (GpuDriverHelper.supportsCustomDriverLoading()) {
+                add(
+                    SwitchSetting(
+                        BooleanSetting.ADRENO_GPU_BOOST,
+                        R.string.adreno_gpu_boost,
+                        R.string.adreno_gpu_boost_description,
+                        BooleanSetting.ADRENO_GPU_BOOST.key,
+                        BooleanSetting.ADRENO_GPU_BOOST.defaultValue
+                    )
+                )
+            }
             add(
                 SwitchSetting(
                     IntSetting.DISK_SHADER_CACHE,
@@ -857,6 +885,15 @@ class SettingsFragmentPresenter(private val fragmentView: SettingsFragmentView) 
                     R.string.audio_stretch_description,
                     IntSetting.ENABLE_AUDIO_STRETCHING.key,
                     IntSetting.ENABLE_AUDIO_STRETCHING.defaultValue
+                )
+            )
+            add(
+                SwitchSetting(
+                    IntSetting.ENABLE_REALTIME_AUDIO,
+                    R.string.realtime_audio,
+                    R.string.realtime_audio_description,
+                    IntSetting.ENABLE_REALTIME_AUDIO.key,
+                    IntSetting.ENABLE_REALTIME_AUDIO.defaultValue
                 )
             )
             add(

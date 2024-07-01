@@ -186,14 +186,14 @@ custom_layout =
 
 # Screen placement when using Custom layout option
 # 0x, 0y is the top left corner of the render window.
-custom_top_left =
-custom_top_top =
-custom_top_right =
-custom_top_bottom =
-custom_bottom_left =
-custom_bottom_top =
-custom_bottom_right =
-custom_bottom_bottom =
+custom_top_x =
+custom_top_y =
+custom_top_width =
+custom_top_height =
+custom_bottom_x =
+custom_bottom_y =
+custom_bottom_width =
+custom_bottom_height =
 
 # Swaps the prominent screen with the other screen.
 # For example, if Single Screen is chosen, setting this to 1 will display the bottom screen instead of the top screen.
@@ -239,6 +239,10 @@ enable_dsp_lle_thread =
 # at the cost of increasing audio latency.
 # 0: No, 1 (default): Yes
 enable_audio_stretching =
+
+# Scales audio playback speed to account for drops in emulation framerate
+# 0 (default): No, 1: Yes
+enable_realtime_audio =
 
 # Output volume.
 # 1.0 (default): 100%, 0.0; mute
