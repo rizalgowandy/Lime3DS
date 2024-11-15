@@ -18,6 +18,7 @@
 #include "lime_qt/configuration/configure_enhancements.h"
 #include "lime_qt/configuration/configure_general.h"
 #include "lime_qt/configuration/configure_graphics.h"
+#include "lime_qt/configuration/configure_layout.h"
 #include "lime_qt/configuration/configure_per_game.h"
 #include "lime_qt/configuration/configure_system.h"
 #include "lime_qt/util/util.h"
@@ -30,12 +31,13 @@ ConfigurePerGame::ConfigurePerGame(QWidget* parent, u64 title_id_, const QString
       filename{file_name.toStdString()}, title_id{title_id_}, system{system_} {
     const auto config_file_name = title_id == 0 ? std::string(FileUtil::GetFilename(filename))
                                                 : fmt::format("{:016X}", title_id);
-    game_config = std::make_unique<Config>(config_file_name, Config::ConfigType::PerGameConfig);
+    game_config = std::make_unique<QtConfig>(config_file_name, QtConfig::ConfigType::PerGameConfig);
 
     const bool is_powered_on = system.IsPoweredOn();
     audio_tab = std::make_unique<ConfigureAudio>(is_powered_on, this);
     general_tab = std::make_unique<ConfigureGeneral>(this);
     enhancements_tab = std::make_unique<ConfigureEnhancements>(this);
+    layout_tab = std::make_unique<ConfigureLayout>(this);
     graphics_tab =
         std::make_unique<ConfigureGraphics>(gl_renderer, physical_devices, is_powered_on, this);
     system_tab = std::make_unique<ConfigureSystem>(system, this);
@@ -47,6 +49,7 @@ ConfigurePerGame::ConfigurePerGame(QWidget* parent, u64 title_id_, const QString
     ui->tabWidget->addTab(general_tab.get(), tr("General"));
     ui->tabWidget->addTab(system_tab.get(), tr("System"));
     ui->tabWidget->addTab(enhancements_tab.get(), tr("Enhancements"));
+    ui->tabWidget->addTab(layout_tab.get(), tr("Layout"));
     ui->tabWidget->addTab(graphics_tab.get(), tr("Graphics"));
     ui->tabWidget->addTab(audio_tab.get(), tr("Audio"));
     ui->tabWidget->addTab(debug_tab.get(), tr("Debug"));
@@ -78,7 +81,8 @@ ConfigurePerGame::~ConfigurePerGame() = default;
 void ConfigurePerGame::ResetDefaults() {
     const auto config_file_name = title_id == 0 ? filename : fmt::format("{:016X}", title_id);
     QMessageBox::StandardButton answer = QMessageBox::question(
-        this, tr("Citra"), tr("Are you sure you want to <b>reset your settings for this game</b>?"),
+        this, tr("Lime3DS"),
+        tr("Are you sure you want to <b>reset your settings for this game</b>?"),
         QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
     if (answer == QMessageBox::No) {
@@ -102,6 +106,7 @@ void ConfigurePerGame::ApplyConfiguration() {
     general_tab->ApplyConfiguration();
     system_tab->ApplyConfiguration();
     enhancements_tab->ApplyConfiguration();
+    layout_tab->ApplyConfiguration();
     graphics_tab->ApplyConfiguration();
     audio_tab->ApplyConfiguration();
     debug_tab->ApplyConfiguration();
@@ -139,7 +144,14 @@ void ConfigurePerGame::LoadConfiguration() {
     ui->display_title_id->setText(
         QStringLiteral("%1").arg(title_id, 16, 16, QLatin1Char{'0'}).toUpper());
 
-    const auto loader = Loader::GetLoader(filename);
+    std::unique_ptr<Loader::AppLoader> loader_ptr;
+    Loader::AppLoader* loader;
+    if (system.IsPoweredOn()) {
+        loader = &system.GetAppLoader();
+    } else {
+        loader_ptr = Loader::GetLoader(filename);
+        loader = loader_ptr.get();
+    }
 
     std::string title;
     if (loader->ReadTitle(title) == Loader::ResultStatus::Success)

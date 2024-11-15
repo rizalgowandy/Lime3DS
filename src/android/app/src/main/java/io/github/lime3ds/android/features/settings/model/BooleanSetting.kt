@@ -1,4 +1,4 @@
-// Copyright 2023 Citra Emulator Project
+// Copyright Citra Emulator Project / Lime3DS Emulator Project
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
@@ -13,7 +13,9 @@ enum class BooleanSetting(
     ASYNC_SHADERS("async_shader_compilation", Settings.SECTION_RENDERER, false),
     PLUGIN_LOADER("plugin_loader", Settings.SECTION_SYSTEM, false),
     ALLOW_PLUGIN_LOADER("allow_plugin_loader", Settings.SECTION_SYSTEM, true),
-    SWAP_SCREEN("swap_screen", Settings.SECTION_LAYOUT, false);
+    SWAP_SCREEN("swap_screen", Settings.SECTION_LAYOUT, false),
+    CUSTOM_LAYOUT("custom_layout",Settings.SECTION_LAYOUT,false),
+    ADRENO_GPU_BOOST("adreno_gpu_boost", Settings.SECTION_RENDERER, false);
 
     override var boolean: Boolean = defaultValue
 
@@ -33,7 +35,9 @@ enum class BooleanSetting(
     companion object {
         private val NOT_RUNTIME_EDITABLE = listOf(
             PLUGIN_LOADER,
-            ALLOW_PLUGIN_LOADER
+            ALLOW_PLUGIN_LOADER,
+            ADRENO_GPU_BOOST,
+            ASYNC_SHADERS
         )
 
         fun from(key: String): BooleanSetting? =

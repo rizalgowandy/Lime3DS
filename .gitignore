@@ -3,6 +3,9 @@
 doc-build/
 build-*/
 
+# NSIS built executables
+src/installer/*.exe
+
 # Generated source files
 src/common/scm_rev.cpp
 .travis.descriptor.json
@@ -15,6 +18,7 @@ src/common/scm_rev.cpp
 .vscode/
 .cache/
 .kdev4/
+.kotlin/
 cmake-build-debug/
 cmake-build-release/
 CMakeLists.txt.user*

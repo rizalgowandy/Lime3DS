@@ -1,4 +1,4 @@
-// Copyright 2023 Citra Emulator Project
+// Copyright Citra Emulator Project / Lime3DS Emulator Project
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
@@ -6,6 +6,7 @@ package io.github.lime3ds.android.features.settings.model.view
 
 import io.github.lime3ds.android.NativeLibrary
 import io.github.lime3ds.android.features.settings.model.AbstractSetting
+import io.github.lime3ds.android.activities.EmulationActivity
 
 /**
  * ViewModel abstraction for an Item in the RecyclerView powering SettingsFragments.
@@ -23,7 +24,7 @@ abstract class SettingsItem(
 
     val isEditable: Boolean
         get() {
-            if (!NativeLibrary.isRunning()) return true
+            if (!EmulationActivity.isRunning()) return true
             return setting?.isRuntimeEditable ?: false
         }
 
@@ -38,5 +39,6 @@ abstract class SettingsItem(
         const val TYPE_RUNNABLE = 7
         const val TYPE_INPUT_BINDING = 8
         const val TYPE_STRING_INPUT = 9
+        const val TYPE_FLOAT_INPUT = 10
     }
 }

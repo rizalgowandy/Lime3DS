@@ -1,4 +1,4 @@
-// Copyright 2023 Citra Emulator Project
+// Copyright Citra Emulator Project / Lime3DS Emulator Project
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
@@ -33,12 +33,14 @@ import io.github.lime3ds.android.contracts.OpenFileResultContract
 import io.github.lime3ds.android.databinding.ActivityEmulationBinding
 import io.github.lime3ds.android.display.ScreenAdjustmentUtil
 import io.github.lime3ds.android.features.hotkeys.HotkeyUtility
+import io.github.lime3ds.android.features.settings.model.BooleanSetting
+import io.github.lime3ds.android.features.settings.model.IntSetting
 import io.github.lime3ds.android.features.settings.model.SettingsViewModel
 import io.github.lime3ds.android.features.settings.model.view.InputBindingSetting
+import io.github.lime3ds.android.fragments.EmulationFragment
 import io.github.lime3ds.android.fragments.MessageDialogFragment
 import io.github.lime3ds.android.utils.ControllerMappingHelper
 import io.github.lime3ds.android.utils.FileBrowserHelper
-import io.github.lime3ds.android.utils.ForegroundService
 import io.github.lime3ds.android.utils.EmulationLifecycleUtil
 import io.github.lime3ds.android.utils.EmulationMenuSettings
 import io.github.lime3ds.android.utils.ThemeUtil
@@ -47,15 +49,22 @@ import io.github.lime3ds.android.viewmodel.EmulationViewModel
 class EmulationActivity : AppCompatActivity() {
     private val preferences: SharedPreferences
         get() = PreferenceManager.getDefaultSharedPreferences(LimeApplication.appContext)
-    private var foregroundService: Intent? = null
     var isActivityRecreated = false
-
-    private val settingsViewModel: SettingsViewModel by viewModels()
     private val emulationViewModel: EmulationViewModel by viewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     private lateinit var binding: ActivityEmulationBinding
     private lateinit var screenAdjustmentUtil: ScreenAdjustmentUtil
     private lateinit var hotkeyUtility: HotkeyUtility
+
+    private val emulationFragment: EmulationFragment
+        get() {
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+            return navHostFragment.getChildFragmentManager().fragments.last() as EmulationFragment
+        }
+
+    private var isEmulationRunning: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeUtil.setTheme(this)
@@ -64,8 +73,10 @@ class EmulationActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+        NativeLibrary.enableAdrenoTurboMode(BooleanSetting.ADRENO_GPU_BOOST.boolean)
+
         binding = ActivityEmulationBinding.inflate(layoutInflater)
-        screenAdjustmentUtil = ScreenAdjustmentUtil(windowManager, settingsViewModel.settings)
+        screenAdjustmentUtil = ScreenAdjustmentUtil(this, windowManager, settingsViewModel.settings)
         hotkeyUtility = HotkeyUtility(screenAdjustmentUtil)
         setContentView(binding.root)
 
@@ -79,13 +90,24 @@ class EmulationActivity : AppCompatActivity() {
         // Set these options now so that the SurfaceView the game renders into is the right size.
         enableFullscreenImmersive()
 
-        // Override Citra core INI with the one set by our in game menu
+        // Override Lime3DS core INI with the one set by our in game menu
         NativeLibrary.swapScreens(
             EmulationMenuSettings.swapScreens,
             windowManager.defaultDisplay.rotation
         )
 
-        EmulationLifecycleUtil.addShutdownHook(hook = { this.finish() })
+        EmulationLifecycleUtil.addShutdownHook(hook = {
+            if (intent.getBooleanExtra("launched_from_shortcut", false)) {
+                finishAffinity()
+            } else {
+                this.finish()
+            }
+        })
+
+        isEmulationRunning = true
+        instance = this
+
+        applyOrientationSettings() // Check for orientation settings at startup
     }
 
     // On some devices, the system bars will not disappear on first boot or after some
@@ -94,6 +116,7 @@ class EmulationActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         enableFullscreenImmersive()
+        applyOrientationSettings() // Check for orientation settings changes on runtime
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -106,8 +129,21 @@ class EmulationActivity : AppCompatActivity() {
         NativeLibrary.reloadCameraDevices()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("isEmulationRunning", isEmulationRunning)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        isEmulationRunning = savedInstanceState.getBoolean("isEmulationRunning", false)
+    }
+
     override fun onDestroy() {
+        NativeLibrary.enableAdrenoTurboMode(false)
         EmulationLifecycleUtil.clear()
+        isEmulationRunning = false
+        instance = null
         super.onDestroy()
     }
 
@@ -172,6 +208,11 @@ class EmulationActivity : AppCompatActivity() {
         }
     }
 
+    private fun applyOrientationSettings() {
+        val orientationOption = IntSetting.ORIENTATION_OPTION.int
+        screenAdjustmentUtil.changeActivityOrientation(orientationOption)
+    }
+
     // Gets button presses
     @Suppress("DEPRECATION")
     @SuppressLint("GestureBackNavigation")
@@ -179,6 +220,10 @@ class EmulationActivity : AppCompatActivity() {
         // TODO: Move this check into native code - prevents crash if input pressed before starting emulation
         if (!NativeLibrary.isRunning()) {
             return false
+        }
+
+        if (emulationFragment.isDrawerOpen()) {
+            return super.dispatchKeyEvent(event)
         }
 
         val button =
@@ -219,11 +264,9 @@ class EmulationActivity : AppCompatActivity() {
 
     override fun dispatchGenericMotionEvent(event: MotionEvent): Boolean {
         // TODO: Move this check into native code - prevents crash if input pressed before starting emulation
-        if (!NativeLibrary.isRunning()) {
-            return super.dispatchGenericMotionEvent(event)
-        }
-
-        if (event.source and InputDevice.SOURCE_CLASS_JOYSTICK == 0) {
+        if (!NativeLibrary.isRunning() ||
+            (event.source and InputDevice.SOURCE_CLASS_JOYSTICK == 0) ||
+            emulationFragment.isDrawerOpen()) {
             return super.dispatchGenericMotionEvent(event)
         }
 
@@ -450,10 +493,10 @@ class EmulationActivity : AppCompatActivity() {
         }
 
     companion object {
-        fun stopForegroundService(activity: Activity) {
-            val startIntent = Intent(activity, ForegroundService::class.java)
-            startIntent.action = ForegroundService.ACTION_STOP
-            activity.startForegroundService(startIntent)
+        private var instance: EmulationActivity? = null
+
+        fun isRunning(): Boolean {
+            return instance?.isEmulationRunning ?: false
         }
     }
 }

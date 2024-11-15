@@ -32,6 +32,7 @@ public:
         ARTIC_EXT_DATA = (1 << 1),
         ARTIC_BOSS_EXT_DATA = (1 << 2),
         ARTIC_SHARED_EXT_DATA = (1 << 3),
+        ARTIC_SYSTEM_SAVE_DATA = (1 << 4),
     };
     union PerfArticEvents {
         u32 raw{};
@@ -81,6 +82,12 @@ public:
      * useful for scaling inputs or outputs moving between the two time domains.
      */
     double GetLastFrameTimeScale() const;
+
+    /**
+     * Has the same functionality as GetLastFrameTimeScale, but uses the mean frame time over the
+     * last 50 frames rather than only the frame time of the previous frame.
+     */
+    double GetStableFrameTimeScale() const;
 
     void AddArticBaseTraffic(u32 bytes) {
         artic_transmitted += bytes;

@@ -1,4 +1,4 @@
-// Copyright 2014 Citra Emulator Project
+// Copyright Citra Emulator Project / Lime3DS Emulator Project
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
@@ -20,7 +20,7 @@
 #include "input_common/main.h"
 #include "input_common/motion_emu.h"
 #include "lime_qt/bootmanager.h"
-#include "lime_qt/main.h"
+#include "lime_qt/lime_qt.h"
 #include "video_core/custom_textures/custom_tex_manager.h"
 #include "video_core/gpu.h"
 #include "video_core/renderer_base.h"
@@ -392,7 +392,7 @@ static Frontend::WindowSystemType GetWindowSystemType() {
     else if (platform_name == QStringLiteral("wayland") ||
              platform_name == QStringLiteral("wayland-egl"))
         return Frontend::WindowSystemType::Wayland;
-    else if (platform_name == QStringLiteral("cocoa") || platform_name == QStringLiteral("ios"))
+    else if (platform_name == QStringLiteral("cocoa"))
         return Frontend::WindowSystemType::MacOS;
 
     LOG_CRITICAL(Frontend, "Unknown Qt platform!");

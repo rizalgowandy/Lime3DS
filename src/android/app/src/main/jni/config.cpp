@@ -1,4 +1,4 @@
-// Copyright 2014 Citra Emulator Project
+// Copyright Citra Emulator Project / Lime3DS Emulator Project
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
@@ -128,6 +128,8 @@ void Config::ReadValues() {
         static_cast<u16>(sdl2_config->GetInteger("Controls", "udp_input_port",
                                                  InputCommon::CemuhookUDP::DEFAULT_PORT));
 
+    ReadSetting("Controls", Settings::values.use_artic_base_controller);
+
     // Core
     ReadSetting("Core", Settings::values.use_cpu_jit);
     ReadSetting("Core", Settings::values.cpu_clock_percentage);
@@ -148,7 +150,8 @@ void Config::ReadValues() {
     ReadSetting("Renderer", Settings::values.texture_filter);
     ReadSetting("Renderer", Settings::values.texture_sampling);
 
-    // Work around to map Android setting for enabling the frame limiter to the format Citra expects
+    // Work around to map Android setting for enabling the frame limiter to the format Lime3DS
+    // expects
     if (sdl2_config->GetBoolean("Renderer", "use_frame_limit", true)) {
         ReadSetting("Renderer", Settings::values.frame_limit);
     } else {
@@ -171,20 +174,43 @@ void Config::ReadValues() {
     ReadSetting("Renderer", Settings::values.bg_blue);
 
     // Layout
-    Settings::values.layout_option = static_cast<Settings::LayoutOption>(sdl2_config->GetInteger(
-        "Layout", "layout_option", static_cast<int>(Settings::LayoutOption::MobileLandscape)));
-    ReadSetting("Layout", Settings::values.custom_layout);
-    ReadSetting("Layout", Settings::values.custom_top_left);
-    ReadSetting("Layout", Settings::values.custom_top_top);
-    ReadSetting("Layout", Settings::values.custom_top_right);
-    ReadSetting("Layout", Settings::values.custom_top_bottom);
-    ReadSetting("Layout", Settings::values.custom_bottom_left);
-    ReadSetting("Layout", Settings::values.custom_bottom_top);
-    ReadSetting("Layout", Settings::values.custom_bottom_right);
-    ReadSetting("Layout", Settings::values.custom_bottom_bottom);
+    // Somewhat inelegant solution to ensure layout value is between 0 and 5 on read
+    // since older config files may have other values
+    int layoutInt = (int)sdl2_config->GetInteger(
+        "Layout", "layout_option", static_cast<int>(Settings::LayoutOption::LargeScreen));
+    if (layoutInt < 0 || layoutInt > 5) {
+        layoutInt = static_cast<int>(Settings::LayoutOption::LargeScreen);
+    }
+    Settings::values.layout_option = static_cast<Settings::LayoutOption>(layoutInt);
+    Settings::values.large_screen_proportion =
+        static_cast<float>(sdl2_config->GetReal("Layout", "large_screen_proportion", 2.25));
+    Settings::values.small_screen_position = static_cast<Settings::SmallScreenPosition>(
+        sdl2_config->GetInteger("Layout", "small_screen_position",
+                                static_cast<int>(Settings::SmallScreenPosition::TopRight)));
+    ReadSetting("Layout", Settings::values.custom_top_x);
+    ReadSetting("Layout", Settings::values.custom_top_y);
+    ReadSetting("Layout", Settings::values.custom_top_width);
+    ReadSetting("Layout", Settings::values.custom_top_height);
+    ReadSetting("Layout", Settings::values.custom_bottom_x);
+    ReadSetting("Layout", Settings::values.custom_bottom_y);
+    ReadSetting("Layout", Settings::values.custom_bottom_width);
+    ReadSetting("Layout", Settings::values.custom_bottom_height);
     ReadSetting("Layout", Settings::values.cardboard_screen_size);
     ReadSetting("Layout", Settings::values.cardboard_x_shift);
     ReadSetting("Layout", Settings::values.cardboard_y_shift);
+
+    Settings::values.portrait_layout_option =
+        static_cast<Settings::PortraitLayoutOption>(sdl2_config->GetInteger(
+            "Layout", "portrait_layout_option",
+            static_cast<int>(Settings::PortraitLayoutOption::PortraitTopFullWidth)));
+    ReadSetting("Layout", Settings::values.custom_portrait_top_x);
+    ReadSetting("Layout", Settings::values.custom_portrait_top_y);
+    ReadSetting("Layout", Settings::values.custom_portrait_top_width);
+    ReadSetting("Layout", Settings::values.custom_portrait_top_height);
+    ReadSetting("Layout", Settings::values.custom_portrait_bottom_x);
+    ReadSetting("Layout", Settings::values.custom_portrait_bottom_y);
+    ReadSetting("Layout", Settings::values.custom_portrait_bottom_width);
+    ReadSetting("Layout", Settings::values.custom_portrait_bottom_height);
 
     // Utility
     ReadSetting("Utility", Settings::values.dump_textures);
@@ -195,6 +221,7 @@ void Config::ReadValues() {
     // Audio
     ReadSetting("Audio", Settings::values.audio_emulation);
     ReadSetting("Audio", Settings::values.enable_audio_stretching);
+    ReadSetting("Audio", Settings::values.enable_realtime_audio);
     ReadSetting("Audio", Settings::values.volume);
     ReadSetting("Audio", Settings::values.output_type);
     ReadSetting("Audio", Settings::values.output_device);
@@ -266,8 +293,9 @@ void Config::ReadValues() {
     // Web Service
     NetSettings::values.web_api_url =
         sdl2_config->GetString("WebService", "web_api_url", "https://api.citra-emu.org");
-    NetSettings::values.citra_username = sdl2_config->GetString("WebService", "citra_username", "");
-    NetSettings::values.citra_token = sdl2_config->GetString("WebService", "citra_token", "");
+    NetSettings::values.lime3ds_username =
+        sdl2_config->GetString("WebService", "lime3ds_username", "");
+    NetSettings::values.lime3ds_token = sdl2_config->GetString("WebService", "lime3ds_token", "");
 }
 
 void Config::Reload() {

@@ -1,4 +1,4 @@
-// Copyright 2014 Citra Emulator Project
+// Copyright Citra Emulator Project / Lime3DS Emulator Project
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
@@ -40,7 +40,7 @@ std::string_view GetGraphicsAPIName(GraphicsAPI api) {
 
 std::string_view GetTextureFilterName(TextureFilter filter) {
     switch (filter) {
-    case TextureFilter::None:
+    case TextureFilter::NoFilter:
         return "None";
     case TextureFilter::Anime4K:
         return "Anime4K";
@@ -83,6 +83,7 @@ void LogSettings() {
     LOG_INFO(Config, "Lime3DS Configuration:");
     log_setting("Core_UseCpuJit", values.use_cpu_jit.GetValue());
     log_setting("Core_CPUClockPercentage", values.cpu_clock_percentage.GetValue());
+    log_setting("Controller_UseArticController", values.use_artic_base_controller.GetValue());
     log_setting("Renderer_UseGLES", values.use_gles.GetValue());
     log_setting("Renderer_GraphicsAPI", GetGraphicsAPIName(values.graphics_api.GetValue()));
     log_setting("Renderer_AsyncShaders", values.async_shader_compilation.GetValue());
@@ -107,9 +108,11 @@ void LogSettings() {
         log_setting("Renderer_AnaglyphShader", values.anaglyph_shader_name.GetValue());
     }
     log_setting("Layout_LayoutOption", values.layout_option.GetValue());
+    log_setting("Layout_PortraitLayoutOption", values.portrait_layout_option.GetValue());
     log_setting("Layout_SwapScreen", values.swap_screen.GetValue());
     log_setting("Layout_UprightScreen", values.upright_screen.GetValue());
     log_setting("Layout_LargeScreenProportion", values.large_screen_proportion.GetValue());
+    log_setting("Layout_SmallScreenPosition", values.small_screen_position.GetValue());
     log_setting("Utility_DumpTextures", values.dump_textures.GetValue());
     log_setting("Utility_CustomTextures", values.custom_textures.GetValue());
     log_setting("Utility_PreloadTextures", values.preload_textures.GetValue());
@@ -121,6 +124,7 @@ void LogSettings() {
     log_setting("Audio_InputType", values.input_type.GetValue());
     log_setting("Audio_InputDevice", values.input_device.GetValue());
     log_setting("Audio_EnableAudioStretching", values.enable_audio_stretching.GetValue());
+    log_setting("Audio_EnableRealtime", values.enable_realtime_audio.GetValue());
     using namespace Service::CAM;
     log_setting("Camera_OuterRightName", values.camera_name[OuterRightCamera]);
     log_setting("Camera_OuterRightConfig", values.camera_config[OuterRightCamera]);
@@ -171,6 +175,7 @@ void RestoreGlobalState(bool is_powered_on) {
     // Audio
     values.audio_emulation.SetGlobal(true);
     values.enable_audio_stretching.SetGlobal(true);
+    values.enable_realtime_audio.SetGlobal(true);
     values.volume.SetGlobal(true);
 
     // Core
@@ -193,9 +198,11 @@ void RestoreGlobalState(bool is_powered_on) {
     values.texture_filter.SetGlobal(true);
     values.texture_sampling.SetGlobal(true);
     values.layout_option.SetGlobal(true);
+    values.portrait_layout_option.SetGlobal(true);
     values.swap_screen.SetGlobal(true);
     values.upright_screen.SetGlobal(true);
     values.large_screen_proportion.SetGlobal(true);
+    values.small_screen_position.SetGlobal(true);
     values.bg_red.SetGlobal(true);
     values.bg_green.SetGlobal(true);
     values.bg_blue.SetGlobal(true);

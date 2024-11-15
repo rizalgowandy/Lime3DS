@@ -1,4 +1,4 @@
-// Copyright 2023 Citra Emulator Project
+// Copyright Citra Emulator Project / Lime3DS Emulator Project
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
@@ -61,12 +61,14 @@ class GamesFragment : Fragment() {
         homeViewModel.setNavigationVisibility(visible = true, animated = true)
         homeViewModel.setStatusBarShadeVisibility(visible = true)
 
+        val inflater = LayoutInflater.from(requireContext())
+
         binding.gridGames.apply {
             layoutManager = GridLayoutManager(
                 requireContext(),
                 resources.getInteger(R.integer.game_grid_columns)
             )
-            adapter = GameAdapter(requireActivity() as AppCompatActivity)
+            adapter = GameAdapter(requireActivity() as AppCompatActivity, inflater)
         }
 
         binding.swipeRefresh.apply {

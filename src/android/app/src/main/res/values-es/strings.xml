@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_disclaimer">Este software correrá juegos de la consola portátil Nintendo 3DS. No se incluye ningún juego.\n\nAntes de comenzar, elige una carpeta en donde guardar los datos de usuario de Lime3DS.\n\nQué es ésto:\n<a href='https://github.com/citra-emu/citra/wiki/Citra-Android-user-data-and-storage'>Wiki - Datos de usuario de Lime3DS Android y almacenamiento</a></string>
+    <string name="app_disclaimer">Este software correrá juegos de la consola portátil Nintendo 3DS. No se incluye ningún juego.\n\nAntes de comenzar, elige una carpeta en donde guardar los datos de usuario de Lime3DS.\n\nQué es ésto:\n<a href='https://web.archive.org/web/20240304193549/https://github.com/citra-emu/citra/wiki/Citra-Android-user-data-and-storage'>Wiki - Datos de usuario de Lime3DS Android y almacenamiento</a></string>
     <string name="app_notification_channel_description">Notificaciones del Emulador Lime3DS</string>
     <string name="app_notification_running">Lime3DS está ejecutándose</string>
     <string name="app_game_install_description">A continuación, tendrás que seleccionar una Carpeta de Juegos. Lime3DS mostrará todas las ROMs de 3DS en la carpeta seleccionada en la app.\n\nLas ROMs en CIA, actualizaciones y DLC tendrán que ser instaladas por separado al darle al icono de la carpeta y seleccionar Instalar CIA.</string>
@@ -26,10 +26,9 @@
     <string name="select_games_folder">Seleccionar Directorio de Juego</string>
     <string name="select_games_folder_description">Permite que Lime3DS llene la lista de juegos</string>
     <string name="about">Acerca de</string>
-    <string name="citra_description">Un emulador de 3DS de código abierto</string>
     <string name="about_description">Versión de compilación, créditos y más</string>
     <string name="games_dir_selected">Directorio de juegos seleccionado</string>
-    <string name="select_citra_user_folder_home_description">Cambia los archivos que Lime3DS usa para cargar juegos</string>
+    <string name="select_lime3ds_user_folder_home_description">Cambia los archivos que Lime3DS usa para cargar juegos</string>
     <string name="theme_and_color_description">Modifica el aspecto de la app</string>
     <string name="install_cia_title">Instalar CIA</string>
 
@@ -46,10 +45,7 @@
 
     <!-- About screen strings -->
     <string name="copied_to_clipboard">Copiado al portapapeles</string>
-    <string name="contributors">Contribuidores</string>
-    <string name="contributors_description">Hecho con \u2764 por parte del equipo de Lime3DS</string>
     <string name="contributors_link">https://github.com/Lime3DS/Lime3DS/graphs/contributors</string>
-    <string name="licenses_description">Proyectos que han hecho que Lime3DS para Android sea una realidad</string>
     <string name="build">Compilación</string>
     <string name="licenses">Licencias</string>
     <string name="support_link">https://discord.gg/4ZjMpAp3M6</string>
@@ -79,16 +75,19 @@
     <string name="permission_denied">Permiso denegado</string>
     <string name="add_games_warning">¿Saltarse la selección de la carpeta de juegos?</string>
     <string name="add_games_warning_description">Los juegos no se mostrarán en la lista de juegos si no se selecciona una carpeta.</string>
-    <string name="add_games_warning_help">https://citra-emu.org/wiki/dumping-game-cartridges/</string>
+    <string name="add_games_warning_help">https://web.archive.org/web/20240304210021/https://citra-emu.org/wiki/dumping-game-cartridges/</string>
     <string name="warning_help">Ayuda</string>
     <string name="warning_skip">Saltar</string>
     <string name="warning_cancel">Cancelar</string>
-    <string name="select_citra_user_folder">Seleccionar Carpeta de Usuario</string>
-    <string name="select_citra_user_folder_description"><![CDATA[Selecciona tu directorio con los<a href=\"https://github.com/citra-emu/citra/wiki/Citra-Android-user-data-and-storage\">datos de usuario</a> con el botón de debajo.]]></string>
+    <string name="select_lime3ds_user_folder">Seleccionar Carpeta de Usuario</string>
+    <string name="select_lime3ds_user_folder_description"><![CDATA[Selecciona tu directorio con los <a href=\"https://web.archive.org/web/20240304193549/https://github.com/citra-emu/citra/wiki/Citra-Android-user-data-and-storage\">datos de usuario</a> con el botón de debajo.]]></string>
     <string name="select">Seleccionar</string>
     <string name="cannot_skip">No puedes saltarte este paso</string>
     <string name="cannot_skip_directory_description">Este paso es imprescindible para que así Lime3DS pueda funcionar. Por favor, seleccione un directorio y entonces podrás continuar.</string>
-    <string name="cannot_skip_directory_help">https://github.com/citra-emu/citra/wiki/Citra-Android-user-data-and-storage</string>
+    <string name="cannot_skip_directory_help">https://web.archive.org/web/20240304193549/https://github.com/citra-emu/citra/wiki/Citra-Android-user-data-and-storage</string>
+    <string name="set_up_theme_settings">Configuración de tema</string>
+    <string name="setup_theme_settings_description">Configura tus preferencias de tema de Lime3DS.</string>
+    <string name="setup_set_theme">Establecer tema</string>
 
     <!-- Search Strings -->
     <string name="search_and_filter_games">Buscar y Filtrar Juegos</string>
@@ -104,8 +103,14 @@
     <string name="controller_triggers">Botones Traseros</string>
     <string name="controller_trigger">Botón Trasero</string>
     <string name="controller_dpad">Pad de Control</string>
+    <string name="controller_dpad_axis">D-Pad (Axis)</string>
+    <string name="controller_dpad_button">D-Pad (Botón)</string>
     <string name="controller_axis_vertical">Eje Vertical</string>
     <string name="controller_axis_horizontal">Eje Horizontal</string>
+    <string name="direction_up">Arriba</string>
+    <string name="direction_down">Abajo</string>
+    <string name="direction_left">Izquierda</string>
+    <string name="direction_right">Derecha</string>
     <string name="input_dialog_title">Asigna %1$s %2$s</string>
     <string name="input_dialog_description">Pulsa o mueve un botón/palanca.</string>
     <string name="input_binding">Asignación de botones</string>
@@ -113,6 +118,7 @@
     <string name="input_binding_description_vertical_axis">Mueve el joystick arriba o abajo.</string>
     <string name="input_binding_description_horizontal_axis">Mueve el joystick a izquierda o derecha.</string>
     <string name="button_home">HOME</string>
+    <string name="button_swap">Intercambiar Pantallas</string>
     <string name="input_message_analog_only">¡Este control debe asignarse a un stick analógico del mando o a un eje del Pad de Control!</string>
     <string name="input_message_button_only">¡Este control debe asignarse a un botón del mando!</string>
 
@@ -125,7 +131,7 @@
     <string name="download">Descargar</string>
     <string name="start">Iniciar</string>
     <string name="keys_missing">Lime3DS no tiene las claves para descargar los archivos de sistema.</string>
-    <string name="how_to_get_keys"><![CDATA[<a href=\"https://citra-emu.org/wiki/aes-keys/\">¿Cómo obtener las claves?</a>]]></string>
+    <string name="how_to_get_keys"><![CDATA[<a href=\"https://web.archive.org/web/20240304203412/https://citra-emu.org/wiki/aes-keys/\">¿Cómo obtener las claves?</a>]]></string>
     <string name="show_home_apps">Mostrar las apps del menú HOME en la lista de juegos</string>
     <string name="run_system_setup">Ejecutar la Configuración de la consola cuando se ejecute el Menú HOME</string>
     <string name="system_type_minimal">Mínimo</string>
@@ -157,6 +163,7 @@
     <!-- System settings strings -->
     <string name="username">Nombre de usuario/a</string>
     <string name="new_3ds">Modo New 3DS</string>
+    <string name="lle_applets">Usar Applets LLE (si están instaladas)</string>
     <string name="clock">Reloj</string>
     <string name="init_time">Tiempo de compensación</string>
     <string name="init_time_description">Si el reloj está en \"Reloj emulado\", ésto cambia la fecha y hora de inicio.</string>
@@ -203,7 +210,6 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="linear_filtering">Filtro Linear</string>
     <string name="linear_filtering_description">Activa el filtro linear, que hace que los gráficos del juego se vean más suaves.</string>
     <string name="texture_filter_name">Filtro de Texturas</string>
-    <string name="texture_filter_description">Mejora los gráficos visuales de los juegos al aplicar un filtro a las texturas. Los filtros soportados son Anime4K Ultrafast, Bicubic, ScaleForce, y xBRZ freescale.</string>
     <string name="hw_shaders">Activar Sombreador de Hardware</string>
     <string name="hw_shaders_description">Usa el hardware para emular los sombreadores de 3DS. Cuando se active, el rendimiento mejorará notablemente.</string>
     <string name="shaders_accurate_mul">Multiplicación Precisa</string>
@@ -216,6 +222,16 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="frame_limit_slider_description">Especifica el valor al que se limita la velocidad de emulación. Con el valor por defecto del 100%, la emulación se limitará a la velocidad normal. Los valores altos o altos incrementarán o reducirán el límite de velocidad.</string>
     <string name="internal_resolution">Resolución interna</string>
     <string name="internal_resolution_description">Especifica la resolución a la que se quiera renderizar. Una alta resolución mejorará la calidad visual un montón, pero también causará un gran impacto en el rendimiento y puede causar fallos en ciertos juegos.</string>
+    <string name="internal_resolution_setting_1x">Nativa (400x240)</string>
+    <string name="internal_resolution_setting_2x">2x Nativa (800x480)</string>
+    <string name="internal_resolution_setting_3x">3x Nativa (1200x720)</string>
+    <string name="internal_resolution_setting_4x">4x Nativa (1600x960)</string>
+    <string name="internal_resolution_setting_5x">5x Nativa (2000x1200)</string>
+    <string name="internal_resolution_setting_6x">6x Nativa (2400x1440)</string>
+    <string name="internal_resolution_setting_7x">7x Nativa (2800x1680)</string>
+    <string name="internal_resolution_setting_8x">8x Nativa (3200x1920)</string>
+    <string name="internal_resolution_setting_9x">9x Nativa (3600x2160)</string>
+    <string name="internal_resolution_setting_10x">10x Nativa (4000x2400)</string>
     <string name="performance_warning">¡Desactivar esta opción reducirá la velocidad de emulación! Para obtener la mejor experiencia, se recomienda que se mantenga activada.</string>
     <string name="debug_warning">Aviso: Modificar estas configuraciones reducirán la velocidad de emulación.</string>
     <string name="stereoscopy">Estereoscopía</string>
@@ -232,6 +248,8 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="use_shader_jit">Shader JIT</string>
     <string name="use_disk_shader_cache">Caché de sombreador de disco</string>
     <string name="use_disk_shader_cache_description">Reduce los parones al guardar y cargar shaders generados y almacenados. No puede ser usado sin Activar Hardware Shader.</string>
+    <string name="adreno_gpu_boost">Mejora Adreno GPU (Experimental)</string>
+    <string name="adreno_gpu_boost_description">Aumenta el rendimiento gráfico en dispositivos compatibles, mejorando así el rendimiento general. Puede provocar un incremento de la potencia usada y la temperatura, así como también problemas de estabilidad en algunos dispositivos.</string>
     <string name="utility">Utilidades</string>
     <string name="dump_textures">Volcar Texturas</string>
     <string name="dump_textures_description">Las texturas han sido volcadas a dump/textures/[Title ID]/.</string>
@@ -246,6 +264,8 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="audio_volume">Volumen</string>
     <string name="audio_stretch">Extensión de Audio</string>
     <string name="audio_stretch_description">Extiende el audio para reducir los parones. Cuando se active, la latencia de audio se incrementará y reducirá un poco el rendimiento.</string>
+    <string name="realtime_audio">Activar audio en tiempo real</string>
+    <string name="realtime_audio_description">Ajusta la velocidad de reproducción de audio para compensar las caídas en la velocidad de emulación de cuadros. Esto significa que el audio se reproducirá a velocidad completa incluso cuando la velocidad de cuadros del juego sea baja. Puede causar problemas de desincronización de audio.</string>
     <string name="audio_input_type">Dispositivo de entrada de audio</string>
     <string name="sound_output_mode">Modo de salida del audio</string>
 
@@ -261,7 +281,7 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="learn_more">Más Información</string>
     <string name="close">Cerrar</string>
     <string name="reset_to_default">Restablecer valores de fábrica</string>
-    <string name="redump_games"><![CDATA[Por favor, siga la guía para volver a volcar tus<a href=\"https://citra-emu.org/wiki/dumping-game-cartridges/\">cartuchos de juego</a> o <a href=\"https://citra-emu.org/wiki/dumping-installed-titles/\">títulos instalados</a>.]]></string>
+    <string name="redump_games"><![CDATA[Por favor, sigue las guías para volcar tus <a href=\"https://web.archive.org/web/20240304210021/https://citra-emu.org/wiki/dumping-game-cartridges/\">cartuchos de juego</a> y/o <a href=\"https://web.archive.org/web/20240304210011/https://citra-emu.org/wiki/dumping-installed-titles/\">títulos instalados</a>.]]></string>
     <string name="option_default">Por defecto</string>
     <string name="none">Ninguno</string>
     <string name="auto">Auto</string>
@@ -295,6 +315,7 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="preferences_audio">Audio</string>
     <string name="preferences_debug">Depuración</string>
     <string name="preferences_theme">Tema y Color</string>
+    <string name="preferences_layout">Estilo</string>
 
     <!-- ROM loading errors -->
     <string name="loader_error_encrypted">Tu ROM está encriptada</string>
@@ -309,24 +330,40 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="emulation_empty_state_slot">Estado %1$d</string>
     <string name="emulation_occupied_state_slot">Estado %1$d - %2$tF %2$tR</string>
     <string name="emulation_show_fps">Mostrar FPS</string>
+    <string name="emulation_haptic_feedback">Respuesta Háptica</string>
     <string name="emulation_overlay_options">Opciones de estilo</string>
     <string name="emulation_configure_controls">Configurar Controles</string>
     <string name="emulation_edit_layout">Editar Estilo</string>
     <string name="emulation_done">Hecho</string>
     <string name="emulation_toggle_controls">Activar Controles</string>
     <string name="emulation_control_scale">Ajustar Escala</string>
+    <string name="emulation_control_scale_global">Escala Global</string>
+    <string name="emulation_control_scale_reset_all">Reiniciar Todo</string>
     <string name="emulation_control_opacity">Ajustar Opacidad</string>
     <string name="emulation_control_joystick_rel_center">Posición central relativa del stick</string>
     <string name="emulation_control_dpad_slide_enable">Deslizamiento de la Cruceta</string>
     <string name="emulation_open_settings">Abrir Configuración</string>
     <string name="emulation_open_cheats">Abrir Trucos</string>
     <string name="emulation_switch_screen_layout">Estilo de Pantalla Apaisada</string>
-    <string name="emulation_screen_layout_landscape">Por defecto</string>
+    <string name="emulation_switch_portrait_layout">Estilo de Pantalla de Perfil</string>
+    <string name="emulation_screen_layout_largescreen">Pantalla amplia</string>
     <string name="emulation_screen_layout_portrait">Retrato</string>
     <string name="emulation_screen_layout_single">Pantalla Única</string>
     <string name="emulation_screen_layout_sidebyside">Conjunta</string>
     <string name="emulation_screen_layout_hybrid">Pantallas híbridas</string>
-    <string name="emulation_cycle_landscape_layouts">Alternar Estilos de Pantalla Apaisados</string>
+    <string name="emulation_screen_layout_original">Original</string>
+    <string name="emulation_portrait_layout_top_full">Por defecto</string>
+    <string name="emulation_screen_layout_custom">Estilo personalizado</string>
+    <string name="emulation_adjust_custom_layout">Ajusta el estilo personalizado en Configuración</string>
+    <string name="emulation_landscape_custom_layout">Estilo de Pantalla Apaisada</string>
+    <string name="emulation_portrait_custom_layout">Estilo de Pantalla de Perfil</string>
+    <string name="emulation_top_screen">Pantalla superior</string>
+    <string name="emulation_bottom_screen">Pantalla inferior</string>
+    <string name="emulation_custom_layout_x">Posición X</string>
+    <string name="emulation_custom_layout_y">Posición Y</string>
+    <string name="emulation_custom_layout_width">Ancho</string>
+    <string name="emulation_custom_layout_height">Alto</string>
+    <string name="emulation_cycle_landscape_layouts">Alternar estilos</string>
     <string name="emulation_swap_screens">Intercambiar Pantallas</string>
     <string name="emulation_touch_overlay_reset">Reiniciar Estilo</string>
     <string name="emulation_show_overlay">Mostrar Estilo</string>
@@ -394,10 +431,12 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="fatal_error">Error Fatal</string>
     <string name="fatal_error_message">Ha ocurrido un error fatal. Mira el registro para más detalles.\nSeguir con la emulación podría resultar en diversos cuelgues y bugs.</string>
 
-    <!-- Disk shader cache -->
+    <!-- Disk Shader Cache -->
     <string name="preparing_shaders">Preparando shaders</string>
     <string name="building_shaders">Construyendo shaders</string>
 
+    <!-- About Game Dialog -->
+    <string name="play">Jugar</string>
     <!-- Cheats -->
     <string name="cheats">Trucos</string>
     <string name="cheats_add">Añadir trucos</string>
@@ -428,13 +467,30 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <string name="cia_install_error_encrypted">\"%s\" debe ser desencriptado antes de ser usado en Lime3DS .\n Se necesita una 3DS real.</string>
     <string name="cia_install_error_unknown">Ha ocurrido un error desconocido mientras se instalaba \"%s\".\n Por favor, mira el log para más detalles.</string>
 
-    <!-- Theme Modes -->
-    <string name="change_theme_mode">Cambiar Modo de Tema</string>
+    <!-- Memory Sizes -->
+    <string name="memory_formatted">%1$s %2$s</string>
+    <string name="memory_byte">Byte</string>
+    <string name="memory_byte_shorthand">B</string>
+    <string name="memory_kilobyte">KB</string>
+    <string name="memory_megabyte">MB</string>
+    <string name="memory_gigabyte">GB</string>
+    <string name="memory_terabyte">TB</string>
+    <string name="memory_petabyte">PB</string>
+    <string name="memory_exabyte">EB</string>
+
+    <!-- System theme -->
+    <string name="change_theme_mode">Modo de Tema</string>
     <string name="theme_mode_follow_system">Mismo que el sistema</string>
     <string name="theme_mode_light">Claro</string>
     <string name="theme_mode_dark">Oscuro</string>
+
+    <!-- Material You theme -->
     <string name="material_you">Material You</string>
-    <string name="material_you_description">Usa los colores del sistema alrededor de la app</string>
+    <string name="material_you_description">Usa el color del tema del sistema operativo alrededor de la app (Sobreescribe la configuración \"Color del Tema\" cuando está activada)</string>
+
+    <!-- Static theme color -->
+    <string name="static_theme_color">Color del Tema</string>
+    <string name="static_theme_color_description">Cambia el color del tema de los menús de la app</string>
 
     <!-- Black backgrounds theme -->
     <string name="use_black_backgrounds">Fondos Oscuros</string>
@@ -488,6 +544,7 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
 
     <!-- Render 3D modes -->
     <string name="side_by_side">De lado a lado</string>
+    <string name="reverse_side_by_side">De lado a lado inverso</string>
     <string name="anaglyph">Anáglifo</string>
     <string name="interlaced">Entrelazado</string>
     <string name="reverse_interlaced">Entrelazado inverso</string>
@@ -661,8 +718,11 @@ Se esperan fallos gráficos temporales cuando ésta esté activado.</string>
     <!-- Artic base -->
     <string name="artic_server_comm_error">Fallo de comunicación con el servidor Artic Base. La emulación se detendrá.</string>
     <string name="artic_base">Artic Base</string>
-    <string name="artic_base_connect">Conectar con Artic Base</string>
     <string name="artic_base_connect_description">Conectar con una consola real que esté ejecutando un servidor Artic Base</string>
+    <string name="artic_base_connect">Conectar con Artic Base</string>
     <string name="artic_base_enter_address">Introduce la dirección del servidor Artic Base</string>
+    <string name="miscellaneous">Misceláneos</string>
+    <string name="use_artic_base_controller">Usar Artic Controller al estar conectado al servidor de Artic Base</string>
+    <string name="use_artic_base_controller_desc">Usa los controles dados por el Servidor de Artic Base al estar conectado a éste en vez de los controles del dispositivo configurado.</string>
 
 </resources>
